@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import QuizPage from "./pages/QuizPage";
+import ResultsPage from "./pages/ResultsPage";
 
 function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/quiz/:id" element={<QuizPage />} />
+        <Route path="/results" element={<ResultsPage />} />
+      </Routes>
+    </Router>
   );
 }
 
