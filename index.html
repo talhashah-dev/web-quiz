@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fa" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>وبسایت آزمون HTML</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>آزمون HTML</h1>
+    </header>
+    <main>
+      <div id="quiz-container">
+        <div id="quiz-intro">
+          <h2>به آزمون HTML خوش آمدید!</h2>
+          <p>برای شروع آزمون روی دکمه زیر کلیک کنید.</p>
+          <button id="start-quiz">شروع آزمون</button>
+        </div>
+        <div id="quiz" class="hidden">
+          <div id="question-container">
+            <h3 id="question"></h3>
+            <ul id="options"></ul>
+          </div>
+          <button id="next-question" class="hidden">سوال بعدی</button>
+        </div>
+        <div id="quiz-result" class="hidden">
+          <h2>نتایج آزمون</h2>
+          <p>تعداد پاسخ‌های صحیح: <span id="correct-answers"></span></p>
+          <p>درصد پاسخ‌های صحیح: <span id="percentage"></span>%</p>
+          <h3>سوالاتی که اشتباه پاسخ داده‌اید:</h3>
+          <ul id="incorrect-questions"></ul>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p>© 2025 آزمون HTML | طراحی شده توسط لوبیا</p>
+    </footer>
+  </div>
+ <script src="script.js"></script>
+</body>
+</html>
