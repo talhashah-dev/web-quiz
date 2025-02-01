@@ -14,6 +14,7 @@ import {
   FaLinkedin,
 } from "react-icons/fa";
 import { HeroImg, HTML, CSS, JavaScript, Python } from "../assets/export";
+import WhereToStart from "./WhereToStart";
 
 const Home = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -58,7 +59,7 @@ const Home = () => {
               مرحله از سفر کدنویسی شما، راهنمایی و منابع مناسب را در اختیارتان
               قرار دهیم
             </p>
-            <Link to="" className="text-xl underline font-bold">
+            <Link to="/where-to-start"className="text-xl underline font-bold">
               نمیدونی از کجا شروع کنی؟
             </Link>
           </div>
