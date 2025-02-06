@@ -5,6 +5,7 @@ const resultSchema = new mongoose.Schema({
   quiz: { type: mongoose.Schema.Types.ObjectId, ref: "Quiz", required: true },
   score: { type: Number, required: true },
   totalQuestions: { type: Number, required: true },
+  answers: [{ questionId: String, userAnswer: String, correctAnswer: String }],
   createdAt: { type: Date, default: Date.now },
 });
 

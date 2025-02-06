@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const quizSchema = new mongoose.Schema({
   title: { type: String, required: true },
+  category: { type: String, required: true, enum: ["HTML", "CSS", "JavaScript", "Python"] },
   questions: [
     {
       question: { type: String, required: true },
