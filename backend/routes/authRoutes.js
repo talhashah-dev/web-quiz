@@ -32,4 +32,20 @@ router.post("/login", async (req, res) => {
   res.json({ token });
 });
 
+router.get("/user", async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1]; 
+    if (!token) return res.status(401).json({ message: "توکن احراز هویت موجود نیست!" });
+
+    const decoded = jwt.verify(token, "secretKey");
+    const user = await User.findById(decoded.id).select("-password"); 
+
+    if (!user) return res.status(404).json({ message: "کاربر یافت نشد!" });
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "خطای سرور" });
+  }
+});
+
 module.exports = router;
