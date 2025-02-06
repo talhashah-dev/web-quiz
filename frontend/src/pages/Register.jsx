@@ -21,7 +21,7 @@ const Register = () => {
       });
 
       navigate("/login");
-    } catch (err) {
+    } catch (error) {
       setError("مشکلی در ثبت‌نام رخ داده است.");
     }
   };

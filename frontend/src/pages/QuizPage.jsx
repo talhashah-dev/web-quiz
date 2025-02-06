@@ -8,12 +8,24 @@ const QuizPage = () => {
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
   const [score, setScore] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/quizzes/${id}`)
-      .then(response => setQuiz(response.data))
-      .catch(error => console.error("Error fetching quiz:", error));
-  }, [id]);
+    axios
+      .get(`http://localhost:5000/api/quizzes/${id}`)
+      .then((response) => {
+        if (response.data.category !== "HTML") {
+          navigate("/");
+        } else {
+          setQuiz(response.data);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching quiz:", error);
+        setLoading(false);
+      });
+  }, [id, navigate]);
 
   const handleAnswerChange = (questionIndex, answer) => {
     setAnswers({ ...answers, [questionIndex]: answer });
@@ -31,30 +43,34 @@ const QuizPage = () => {
 
     setScore(correct);
 
-    axios.post("http://localhost:5000/api/results", {
-      user: "65a123abc...",
-      quiz: id,
-      score: correct,
-      totalQuestions: quiz.questions.length,
-    })
+    axios
+      .post("http://localhost:5000/api/results", {
+        user: "65a123abc...",
+        quiz: id,
+        score: correct,
+        totalQuestions: quiz.questions.length,
+      })
       .then(() => navigate("/results"))
-      .catch(error => console.error("Error submitting result:", error));
+      .catch((error) => console.error("Error submitting result:", error));
   };
 
-  if (!quiz) return <p>Loading...</p>;
+  if (loading) return <p className="text-center text-gray-500">در حال بارگذاری...</p>;
+  if (!quiz) return <p className="text-center text-red-500">آزمون یافت نشد.</p>;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-2xl font-bold">{quiz.title}</h1>
+    <div className="min-h-screen bg-gray-50 p-8 flex flex-col items-center">
+      <h1 className="text-3xl font-bold text-blue-700">{quiz.title}</h1>
+      
       {quiz.questions.map((q, index) => (
-        <div key={index} className="mb-4">
-          <p className="text-lg font-semibold">{q.question}</p>
+        <div key={index} className="bg-white shadow-md rounded-lg p-4 w-full max-w-2xl mt-4 transition-transform transform hover:scale-105">
+          <p className="text-lg font-semibold text-gray-800">{q.question}</p>
           {q.options.map((option) => (
-            <label key={option} className="block">
+            <label key={option} className="block text-gray-700 mt-2">
               <input
                 type="radio"
                 name={`question-${index}`}
                 value={option}
+                className="mr-2"
                 onChange={() => handleAnswerChange(index, option)}
               />
               {option}
@@ -62,10 +78,19 @@ const QuizPage = () => {
           ))}
         </div>
       ))}
-      <button className="bg-blue-500 text-white px-4 py-2 mt-4" onClick={handleSubmit}>
-        Submit
+
+      <button
+        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 mt-6 rounded-lg shadow-lg transition-all"
+        onClick={handleSubmit}
+      >
+        ارسال پاسخ‌ها
       </button>
-      {score !== null && <p>Your Score: {score}/{quiz.questions.length}</p>}
+
+      {score !== null && (
+        <p className="mt-4 text-xl font-semibold text-gray-800">
+          نمره شما: {score} از {quiz.questions.length}
+        </p>
+      )}
     </div>
   );
 };
