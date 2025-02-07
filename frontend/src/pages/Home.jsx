@@ -21,7 +21,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/quizzes")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/api/quizzes`)
       .then((response) => setQuizzes(response.data))
       .catch((error) => console.error("Error fetching quizzes:", error));
   }, []);
@@ -45,7 +45,7 @@ const Home = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="bg-gray-800 py-20">
+      {/* <section className="bg-gray-800 py-20">
         <div className="lg:lg:max-w-[70%] mx-auto px-6 text-center flex flex-col lg:flex-row justify-between">
           <div className="flex justify-center">
             <img src={HeroImg} alt="Hero" className="h-60" />
@@ -64,10 +64,10 @@ const Home = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Features Section */}
-      <section className="max-w-full sm:max-w-[80%] md:lg:max-w-[70%] mx-auto px-6 py-12">
+      {/* <section className="max-w-full sm:max-w-[80%] md:lg:max-w-[70%] mx-auto px-6 py-12">
         <h2 className="text-3xl font-bold text-center text-blue-400 mb-8">
           ویژگی‌های ما
         </h2>
@@ -112,7 +112,7 @@ const Home = () => {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Quizzes Section */}
       <section className="mx-auto px-6 py-12">
@@ -175,7 +175,9 @@ const Home = () => {
                 ایجاد کنید
               </p>
               <button className="bg-blue-500 text-white py-2 px-6 mt-4 rounded-lg hover:bg-blue-600 transition-all duration-300">
-                شروع آزمون
+                <Link to="/login">
+                  شروع آزمون
+                </Link>
               </button>
             </div>
           </div>
@@ -214,7 +216,9 @@ const Home = () => {
                 می‌توانید ظاهر وب‌سایت‌ها را به‌طور کامل کنترل کنید
               </p>
               <button className="bg-blue-500 text-white py-2 px-6 mt-4 rounded-lg hover:bg-blue-600 transition-all duration-300">
-                شروع آزمون
+                <Link to="/login">
+                  شروع آزمون
+                </Link>
               </button>
             </div>
           </div>
@@ -250,7 +254,9 @@ const Home = () => {
                 وب‌سایت‌های تعاملی و پویا ایجاد کنید
               </p>
               <button className="bg-blue-500 text-white py-2 px-6 mt-4 rounded-lg hover:bg-blue-600 transition-all duration-300">
-                شروع آزمون
+                <Link to="/login">
+                  شروع آزمون
+                </Link>
               </button>
             </div>
           </div>
@@ -282,7 +288,9 @@ const Home = () => {
                 می‌شود
               </p>
               <button className="bg-blue-500 text-white py-2 px-6 mt-4 rounded-lg hover:bg-blue-600 transition-all duration-300">
-                شروع آزمون
+                <Link to="/login">
+                  شروع آزمون
+                </Link>
               </button>
             </div>
           </div>
@@ -290,13 +298,12 @@ const Home = () => {
       </section>
 
       {/* Courses Section */}
-      <section className="bg-gray-800 py-12">
+      {/* <section className="bg-gray-800 py-12">
         <div className="lg:max-w-[70%] mx-auto px-6">
           <h2 className="text-3xl font-bold text-center text-blue-400 mb-8">
             دوره‌های آموزشی
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* HTML Card */}
             <div className="bg-gray-700 p-6 rounded-lg shadow-md flex flex-col items-center text-center">
               <img src={HTML} alt="HTML" className="h-18 mb-4" />
               <h3 className="text-xl font-semibold text-blue-400">HTML</h3>
@@ -310,7 +317,6 @@ const Home = () => {
               </button>
             </div>
 
-            {/* CSS Card */}
             <div className="bg-gray-700 p-6 rounded-lg shadow-md flex flex-col items-center text-center">
               <img src={CSS} alt="CSS" className="h-18 mb-4" />
               <h3 className="text-xl font-semibold text-blue-400">CSS</h3>
@@ -324,7 +330,6 @@ const Home = () => {
               </button>
             </div>
 
-            {/* JavaScript Card */}
             <div className="bg-gray-700 p-6 rounded-lg shadow-md flex flex-col items-center text-center">
               <img src={JavaScript} alt="JavaScript" className="h-18 mb-4" />
               <h3 className="text-xl font-semibold text-blue-400">
@@ -340,7 +345,6 @@ const Home = () => {
               </button>
             </div>
 
-            {/* Python Card */}
             <div className="bg-gray-700 p-6 rounded-lg shadow-md flex flex-col items-center text-center">
               <img src={Python} alt="Python" className="h-18 mb-4" />
               <h3 className="text-xl font-semibold text-blue-400">Python</h3>
@@ -355,7 +359,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* FAQ Section */}
       <section className="bg-gray-800 py-12">
