@@ -14,7 +14,7 @@ const Register = () => {
     setError("");
 
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, {
         name,
         email,
         password,
@@ -27,7 +27,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white" dir="rtl">
       <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-96">
         <h2 className="text-3xl font-bold text-center text-blue-400">ثبت‌نام</h2>
         {error && <p className="text-red-500 text-center mt-4">{error}</p>}

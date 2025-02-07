@@ -8,7 +8,7 @@ const ResultsPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/results/${id}`)
+      .get(`${import.meta.env.VITE_API_BASE_URL}/results/${id}`)
       .then((response) => {
         setResult(response.data);
       })

@@ -16,7 +16,7 @@ const QuizPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/quizzes/${id}`)
+      .get(`${import.meta.env.VITE_API_BASE_URL}/api/quizzes/${id}`)
       .then((response) => {
         if (response.data.category !== "HTML") {
           navigate("/");
@@ -76,7 +76,7 @@ const QuizPage = () => {
   
     axios
       .post(
-        "http://localhost:5000/api/results",
+        `${import.meta.env.VITE_API_BASE_URL}/api/results`,
         {
           quiz: quiz._id,
           score: correct,
@@ -117,28 +117,27 @@ const QuizPage = () => {
     return `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-  if (loading) return <p className="text-center text-gray-500">در حال بارگذاری...</p>;
+  if (loading) return <p className="text-center min-h-screen flex flex-col items-center justify-center text-2xl" dir="rtl">داره میاد...</p>;
   if (!quiz) return <p className="text-center text-red-500">آزمون یافت نشد.</p>;
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
 
   const resultMessage = () => {
     if (score === quiz.questions.length) {
-      return "عالی! شما همه سوالات را درست پاسخ داده‌اید!";
+      return "آفرین آفرین بخوبی و درستی جواب دادی!!";
     } else if (score >= quiz.questions.length * 0.6) {
-      return "خوب بود! اما هنوز می‌توانید بهتر شوید.";
+      return "هعی بد نبود ولی میتونست خیلی بهتر باشه..";
     } else {
-      return "متاسفم. تلاش بیشتری لازم است.";
+      return "خانم لوبیا نخوندیاااا یالا برو بخون و دوباره تست بده!!!";
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 flex flex-col items-center text-right" dir="rtl">
+    <div className="min-h-screen bg-gray-50 p-8 flex flex-col items-center justify-center text-right" dir="rtl">
       <h1 className="text-3xl font-bold">{quiz.title}</h1>
       
       {!quizStarted ? (
        <div className="w-full max-w-2xl text-center">
-       <h2 className="text-2xl font-bold mb-4">آغاز آزمون</h2>
        <p className="text-lg mb-4">
          آزمون شامل 25 سوال است و هیچ محدودیت زمانی ندارد.
        </p>
@@ -146,9 +145,9 @@ const QuizPage = () => {
          این آزمون رسمی نیست، فقط یک روش خوب است تا ببینید چقدر در مورد HTML می‌دانید، یا نمی‌دانید.
        </p>
        <p className="text-lg mb-4">
-         برای هر پاسخ صحیح، 4 امتیاز دریافت خواهید کرد. در پایان آزمون، نمره کل شما نمایش داده خواهد شد. حداکثر نمره 25 است.
+         برای هر پاسخ صحیح، 4 امتیاز دریافت خواهید کرد. در پایان آزمون، نمره کل شما نمایش داده خواهد شد و حداکثر نمره 100 است.
        </p>
-       <p className="text-lg font-semibold mb-6">آرزو می‌کنیم موفق باشی لوبیا خانم!</p>
+       <p className="text-lg font-semibold mb-6">موفق باشی لوبیا خانم!</p>
      
        <button
          onClick={() => setQuizStarted(true)}
@@ -196,8 +195,8 @@ const QuizPage = () => {
 
       {score !== null && timeOut && (
         <div className="mt-8 w-full max-w-2xl text-center">
-          <p className="text-xl font-semibold">{resultMessage()}</p>
-          <p className="text-lg">درست: {score} از {quiz.questions.length}</p>
+          <p className="text-xl font-semibold mb-2">{resultMessage()}</p>
+          <p className="text-lg">تعداد درست: {score} از {quiz.questions.length}</p>
           <p className="text-lg">درصد درست: {((score / quiz.questions.length) * 100).toFixed(2)}%</p>
 
           <div className="mt-4 flex justify-center gap-4">
