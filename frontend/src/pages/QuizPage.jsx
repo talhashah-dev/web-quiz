@@ -90,7 +90,7 @@ const QuizPage = () => {
         }
       )
       .then((response) => {
-        console.log("نتایج با موفقیت ارسال شد.");
+        console.log(response);
       })
       .catch((error) => {
         console.error("خطا در ارسال نتایج:", error);
@@ -212,12 +212,12 @@ const QuizPage = () => {
             >
               برگشت به داشبورد
             </button>
-            {/* <button
+            <button
               onClick={handleViewAnswers}
               className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg"
             >
               مشاهده جواب‌ها
-            </button> */}
+            </button>
           </div>
         </div>
       )}
