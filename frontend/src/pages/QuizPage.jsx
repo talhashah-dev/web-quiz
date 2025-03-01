@@ -68,12 +68,12 @@ const QuizPage = () => {
       }
       return { questionId: q._id, userAnswer, correctAnswer };
     });
-  
+
     setScore(correct);
     setTimeOut(true);
-  
+
     const token = localStorage.getItem("token");
-  
+
     axios
       .post(
         `${import.meta.env.VITE_API_BASE_URL}/api/results`,
@@ -93,10 +93,9 @@ const QuizPage = () => {
         console.log(response);
       })
       .catch((error) => {
-        console.error("خطا در ارسال نتایج:", error);
+        console.error("Error submitting results:", error);
       });
   };
-  
 
   const handleRestartQuiz = () => {
     setAnswers({});
@@ -117,56 +116,60 @@ const QuizPage = () => {
     return `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-  if (loading) return <p className="text-center min-h-screen flex flex-col items-center justify-center text-2xl" dir="rtl">داره میاد...</p>;
-  if (!quiz) return <p className="text-center text-red-500">آزمون یافت نشد.</p>;
+  if (loading)
+    return (
+      <p className="text-center min-h-screen flex flex-col items-center justify-center text-2xl">
+        Loading...
+      </p>
+    );
+  if (!quiz) return <p className="text-center text-red-500">Quiz not found.</p>;
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
 
   const resultMessage = () => {
     if (score === quiz.questions.length) {
-      return "آفرین آفرین بخوبی و درستی جواب دادی!!";
+      return "Great job! You answered everything correctly!";
     } else if (score >= quiz.questions.length * 0.6) {
-      return "هعی بد نبود ولی میتونست خیلی بهتر باشه..";
+      return "Not bad, but you could do much better.";
     } else {
-      return "خانم لوبیا نخوندیاااا یالا برو بخون و دوباره تست بده!!!";
+      return "Looks like you need to study more! Try again!";
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 flex flex-col items-center justify-center text-right" dir="rtl">
+    <div className="min-h-screen bg-gray-50 p-8 flex flex-col items-center justify-center text-center">
       <h1 className="text-3xl font-bold">{quiz.title}</h1>
-      
+
       {!quizStarted ? (
-       <div className="w-full max-w-2xl text-center">
-       <p className="text-lg mb-4">
-         آزمون شامل 25 سوال است و هیچ محدودیت زمانی ندارد.
-       </p>
-       <p className="text-lg mb-4">
-         این آزمون رسمی نیست، فقط یک روش خوب است تا ببینید چقدر در مورد HTML می‌دانید، یا نمی‌دانید.
-       </p>
-       <p className="text-lg mb-4">
-         برای هر پاسخ صحیح، 4 امتیاز دریافت خواهید کرد. در پایان آزمون، نمره کل شما نمایش داده خواهد شد و حداکثر نمره 100 است.
-       </p>
-       <p className="text-lg font-semibold mb-6">موفق باشی لوبیا خانم!</p>
-     
-       <button
-         onClick={() => setQuizStarted(true)}
-         className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition-all"
-       >
-         شروع آزمون
-       </button>
-     </div>
-     
+        <div className="w-full max-w-2xl text-center">
+          <p className="text-lg mb-4">
+            The quiz consists of 25 questions and has no time limit.
+          </p>
+          <p className="text-lg mb-4">
+            This is not an official test, just a great way to see how much you know about HTML.
+          </p>
+          <p className="text-lg mb-4">
+            For each correct answer, you earn 4 points. At the end of the quiz, your total score will be displayed, with a maximum score of 100.
+          </p>
+          <p className="text-lg font-semibold mb-6">Good luck!</p>
+
+          <button
+            onClick={() => setQuizStarted(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition-all"
+          >
+            Start Quiz
+          </button>
+        </div>
       ) : (
         <div className="w-full max-w-2xl">
-          <p className="text-xl font-semibold text-gray-800">{`سوال ${currentQuestionIndex + 1} از ${quiz.questions.length}:`}</p>
-          
+          <p className="text-xl font-semibold text-gray-800">{`Question ${currentQuestionIndex + 1} of ${quiz.questions.length}:`}</p>
+
           <div className="bg-white shadow-md rounded-lg p-4 mt-4">
             <p className="text-lg font-semibold text-gray-800">{currentQuestion.question}</p>
             {currentQuestion.options.map((option) => (
               <button
                 key={option}
-                className={`block w-full p-2 mt-2 rounded-lg text-right ${
+                className={`block w-full p-2 mt-2 rounded-lg ${
                   answers[currentQuestionIndex] === option
                     ? "bg-blue-500 text-white"
                     : "bg-gray-200 hover:bg-gray-300"
@@ -183,12 +186,10 @@ const QuizPage = () => {
               onClick={handleNextQuestion}
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition-all"
             >
-              {currentQuestionIndex < quiz.questions.length - 1 ? "سوال بعدی" : "پایان آزمون"}
+              {currentQuestionIndex < quiz.questions.length - 1 ? "Next Question" : "Finish Quiz"}
             </button>
 
-            {timer > 0 && (
-              <p className="text-md font-semibold">{formatTime(timer)}</p>
-            )}
+            {timer > 0 && <p className="text-md font-semibold">{formatTime(timer)}</p>}
           </div>
         </div>
       )}
@@ -196,27 +197,31 @@ const QuizPage = () => {
       {score !== null && timeOut && (
         <div className="mt-8 w-full max-w-2xl text-center">
           <p className="text-xl font-semibold mb-2">{resultMessage()}</p>
-          <p className="text-lg">تعداد درست: {score} از {quiz.questions.length}</p>
-          <p className="text-lg">درصد درست: {((score / quiz.questions.length) * 100).toFixed(2)}%</p>
+          <p className="text-lg">
+            Correct answers: {score} out of {quiz.questions.length}
+          </p>
+          <p className="text-lg">
+            Accuracy: {((score / quiz.questions.length) * 100).toFixed(2)}%
+          </p>
 
           <div className="mt-4 flex justify-center gap-4">
             <button
               onClick={handleRestartQuiz}
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg"
             >
-              آزمون دوباره
+              Retake Quiz
             </button>
             <button
               onClick={() => navigate("/dashboard")}
               className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg"
             >
-              برگشت به داشبورد
+              Back to Dashboard
             </button>
             <button
               onClick={handleViewAnswers}
               className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow-lg"
             >
-              مشاهده جواب‌ها
+              View Answers
             </button>
           </div>
         </div>
