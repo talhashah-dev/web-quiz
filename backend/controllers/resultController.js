@@ -8,7 +8,7 @@ exports.submitResult = async (req, res) => {
 
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
-      return res.status(401).json({ message: "توکن احراز هویت موجود نیست!" });
+      return res.status(401).json({ message: "Authentication token is missing!" });
     }
 
     const decoded = jwt.verify(token, "secretKey");
@@ -18,9 +18,9 @@ exports.submitResult = async (req, res) => {
     newResult.answers = answers;
 
     await newResult.save();
-    res.status(201).json({ message: "نتیجه با موفقیت ذخیره شد!" });
+    res.status(201).json({ message: "Result saved successfully!" });
   } catch (error) {
-    res.status(500).json({ error: "خطای سرور" });
+    res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -28,14 +28,15 @@ exports.getResultById = async (req, res) => {
   try {
     const result = await Result.findById(req.params.id).populate("user quiz");
     if (!result) {
-      return res.status(404).json({ error: "نتیجه پیدا نشد" });
+      return res.status(404).json({ error: "Result not found" });
     }
     res.status(200).json(result); 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "خطای سرور" });
+    res.status(500).json({ error: "Server error" });
   }
 };
+
 
 exports.getResults = async (req, res) => {
   try {
