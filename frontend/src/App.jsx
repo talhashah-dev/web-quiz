@@ -6,6 +6,7 @@ import WhereToStart from "./pages/WhereToStart";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import CourseDetailPage from "./pages/CourseDetailPage";
 
 
 const PrivateRoute = ({ children }) => {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/quiz/:id" element={<QuizPage />} />
         <Route path="/quiz/:id/results" element={<ResultsPage />} />
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/courses/:id" element={<CourseDetailPage />} />
       </Routes>
     </Router>
   );
